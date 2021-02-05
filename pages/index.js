@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Link from 'next/link'
 
 export default function Home({albums}) {
   console.log(albums)
@@ -10,7 +11,10 @@ export default function Home({albums}) {
       </Head>
       <div className="grid grid-cols-4 gap-8 p-10">
         {albums.albums.map(album => 
-          <h1 key={album._id}>{album.name}</h1>
+        <Link href="/album/[id]" key={album._id} as={`/album/${album._id}`} >
+          <h1>{album.name}</h1>
+        </Link>
+          
         )}
       </div>
       
