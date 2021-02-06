@@ -1,40 +1,59 @@
 import Link from 'next/link';
 import {useRouter} from 'next/router';
+//redux
+import {useSelector, useDispatch} from 'react-redux'
+import {updateAlbumList} from '../../../actions'
 
-export default function article() {
-    const router = useRouter()
-    const {id} = router.query
+export default function article({albums}) {
+    const router = useRouter();
+    const id = parseInt(router.query.id, 10);
+
+    //update global albumList
+    const dispatch = useDispatch();
+    dispatch(updateAlbumList(albums));
+
+    //set local albumData
+    const albumData = albums.filter(album => album._id === id)[0]
 
     return (
-        <div>
-            <h1>Hello world. I am article {id}</h1>
-            <Link href="/" >Back to home</Link>
+        <div className="pt-8">
+            <h1 className="text-center text-4xl underline">{albumData.name}</h1>
+            {/* Generate images */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 p-12">
+            {albumData.images.map(image => 
+                <ImageItem imageData={image} key={image.name} />
+            )}
+            </div>
         </div>
     )
 }
 
-// export const getStaticProps = async (context) => {
-//     const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${context.params.id}`)
+export const ImageItem = ({imageData}) => {
+    return (
+        <div className="h-max">
+            <div className="h-64">
+                <img src={imageData.url} alt={imageData.name} className="w-full h-full object-cover" />
+            </div>
+            <div>
+                <p className="text-2xl">{imageData.name}</p>
+            </div>
+        </div>
+    )
+}
 
-//     const article = await res.json()
+export const getServerSideProps = async (context) => {
+    let res;
+    if (process.env.NODE_ENV === 'development') {
+        res = await fetch(`http://localhost:3333/api/albums/?email=legion@gmail.com`)
+        } else {
+        res = await fetch(`https://nextjs-sandbox-server.herokuapp.com/api/albums/?email=legion@gmail.com`)
+        }
 
-//     return {
-//         props: {
-//             article
-//         }
-//     }
-// }
+    const albums = await res.json()
 
-// export const getStaticPaths = async () => {
-//     const res = await fetch(`https://jsonplaceholder.typicode.com/posts`)
-
-//     const articles = await res.json()
-
-//     const ids = articles.map(article => article.id)
-//     const paths = ids.map(id => ({params: {id: id.toString()}}))
-
-//     return {
-//         paths,
-//         fallback: false
-//     }
-// }
+    return {
+        props: {
+            albums
+        }
+    }
+}

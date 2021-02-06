@@ -1,12 +1,22 @@
 import '../styles/globals.css'
 import 'tailwindcss/tailwind.css'
 import Layout from '../components/Layout'
+//redux
+import {createStore} from 'redux'
+import {Provider} from 'react-redux'
+import rootReducer from '../reducers'
 
-function MyApp({ Component, pageProps }) {
+const store = createStore(
+  rootReducer
+)
+
+function MyApp({ Component, pageProps, albums }) {
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <Provider store={store}>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </Provider>
   )
 }
 
