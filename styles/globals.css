@@ -1,3 +1,30 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Home */
+.home_albumItem_image {
+    transition: 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+.home_albumItem:hover .home_albumItem_image {
+    transform: scale(1.25);
+}
+
+/* Album */
+.home_album_imageItem {
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+    border: 2px solid none;
+}
+.home_album_imageItem:hover .home_album_imageItem-overlay {
+    display: block;
+}
+
+/* Animations */
+.progbar {
+    animation: mymove 2s infinite;
+  }
+  @keyframes mymove {
+    0% {left: 0px}
+    50% {left: 13rem}
+    100% {left: 0px}
+  }

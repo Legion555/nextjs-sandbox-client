@@ -1,19 +1,21 @@
 import Link from 'next/link'
+import {FaFacebookF, FaTwitter} from 'react-icons/fa'
 
 export default function Nav() {
     return (
-        <nav className="w-screen h-max flex justify-evenly content-center p-4">
+        <nav className="h-max flex justify-evenly content-center p-4">
             <div>
-                <a href="#">Logo</a>
+                <p className="p-2">Legion Photography</p>
             </div>
             <div className="flex">
-                <Link href="/"><p className="mx-2">Home</p></Link>
-                <Link href="/about"><p className="mx-2">About</p></Link>
-                <Link href="/blog"><p className="mx-2">Blog</p></Link>
-                <Link href="/dashboard"><p className="mx-2">Dashboard</p></Link>
+                <Link href="/"><p className="mx-2 p-2 cursor-pointer rounded-xl hover:bg-gray-200">Home</p></Link>
+                <Link href="/about"><p className="mx-2 p-2 cursor-pointer rounded-xl hover:bg-gray-200">About</p></Link>
+                <Link href="/blog"><p className="mx-2 p-2 cursor-pointer rounded-xl hover:bg-gray-200">Blog</p></Link>
+                <Link href="/admin"><p className="mx-2 p-2 cursor-pointer rounded-xl hover:bg-gray-200">Dashboard</p></Link>
             </div>
-            <div>
-                <a href="#">Socials</a>
+            <div className="flex">
+                <FaFacebookF className="mx-2 p-2 text-4xl cursor-pointer rounded-xl hover:bg-gray-200"/>
+                <FaTwitter className="mx-2 p-2 text-4xl cursor-pointer rounded-xl hover:bg-gray-200"/>
             </div>
         </nav>
     )
