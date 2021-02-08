@@ -11,8 +11,7 @@ export default function Login() {
     
     const [errorHandle, setErrorHandle] = useState([]);
     //Login
-    const [loginEmail, setLoginEmail] = useState('legion@gmail.com');
-    const [loginPassword, setLoginPassword] = useState('legion123');
+    const [loginPassword, setLoginPassword] = useState('');
 
     //api url
     let apiUrl;
@@ -53,7 +52,6 @@ export default function Login() {
                     case 'email':
                         error = ['login-email', res.data];
                         setErrorHandle(error);
-                        setLoginEmail('');
                         break;
                     case 'password':
                         error = ['login-password', res.data];

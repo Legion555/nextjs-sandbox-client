@@ -10,6 +10,7 @@ import { AiOutlineCheckCircle } from 'react-icons/ai';
 import { BsCardImage } from 'react-icons/bs';
 
 
+
 const genId = () => {
   return Math.floor(Math.random() * 1000000);
 }

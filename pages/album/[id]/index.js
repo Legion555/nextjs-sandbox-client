@@ -5,9 +5,12 @@ import {useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux'
 import {updateAlbumList} from '../../../actions'
 //icons
+import { BsCardImage } from 'react-icons/bs';
 import { GiCancel } from 'react-icons/gi';
 
-export default function article({albums}) {
+
+
+export default function album({albums}) {
     const router = useRouter();
     const id = parseInt(router.query.id, 10);
 
@@ -49,13 +52,29 @@ export default function article({albums}) {
 }
 
 export const ImageItem = ({imageData, toggleImage}) => {
+    const [isLoaded, setIsLoaded] = useState(false);
     return (
         <div className="home_album_imageItem relative w-full h-72 cursor-pointer"
             onClick={() => toggleImage(imageData)}>
-                <Image className="object-cover" src={imageData.url} alt={imageData.name} layout='fill' />
-            <div className="home_album_imageItem-overlay hidden h-12 relative bg-gradient-to-b from-gray-800 bg-opacity-75">
-                <p className="text-2xl text-white pt-2 pl-2">{imageData.name}</p>
-            </div>
+            {!isLoaded &&
+                <SkeletonImageItem />
+            }
+            <Image className="object-cover" src={imageData.url} alt={imageData.name} layout='fill' onLoad={() => setIsLoaded(true)} />
+            {isLoaded &&
+                <div className="home_album_imageItem-overlay hidden h-12 relative bg-gradient-to-b from-gray-800 bg-opacity-75">
+                    <p className="text-2xl text-white pt-2 pl-2">{imageData.name}</p>
+                </div>
+            }
+            
+        </div>
+    )
+}
+
+export const SkeletonImageItem = () => {
+    return (
+        <div className="flex justify-center items-center flex-col w-full h-full bg-gray-200">
+            <BsCardImage className="text-6xl" />
+            <p>Image is loading...</p>
         </div>
     )
 }
