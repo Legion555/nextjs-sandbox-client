@@ -62,7 +62,7 @@ export default function Contact() {
     }
 
     return (
-        <div className="contact h-screen lg:flex lg:justify-center lg:items-center pt-16">
+        <div className="contact w-full h-screen lg:flex lg:justify-center lg:items-center pt-16">
             <div className="text-gray-200 px-4 py-8">
                 <h1 className="text-6xl">Contact me</h1>
                 <div className="w-full h-0.5 my-1 bg-gray-300" />
