@@ -72,7 +72,7 @@ export default function Login() {
 
 
     return (
-        <div  className="flex w-screen h-screen justify-center items-center">
+        <div  className="login flex w-screen h-screen justify-center items-center">
             <div className="w-max h-max p-10 bg-gray-50 rounded shadow">
                 <h1 className="mb-10 text-center text-4xl">
                     <span className='text-black-400'>Login</span>

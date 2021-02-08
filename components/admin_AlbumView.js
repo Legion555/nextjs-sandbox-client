@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { updateUserData, updateAlbumData} from '../actions';
 //icons
 import { BsTrash } from 'react-icons/bs';
+import { GiCancel } from 'react-icons/gi';
 
 export default function AddAlbum(props) {
     const dispatch = useDispatch();
@@ -59,13 +60,20 @@ export default function AddAlbum(props) {
 
     return (
         <div className="w-screen h-screen flex justify-center items-center absolute top-0 left-0">
-            <div className="w-full h-full bg-gray-50 bg-opacity-80" onClick={() => props.setAlbumView('')}></div>
-            <div className="w-max h-5/6 absolute px-5 py-3 rounded bg-gray-100 shadow overflow-y-scroll">
+            <div className="w-full h-full fixed bg-gray-400 bg-opacity-95" onClick={() => props.setAlbumView('')}></div>
+            <div className="w-max h-5/6 fixed px-5 py-3 rounded bg-gray-100 shadow overflow-y-scroll">
                 <div>
-                    <h1 className="text-center text-4xl">{albumData.name}</h1>
+                    <div className="flex justify-between items-center">
+                        <div>
+                            <h1 className="text-2xl text-gray-400">Album name</h1>
+                            <div className="w-full h-0.5 bg-gray-400" />
+                            <h1 className="text-4xl">{albumData.name}</h1>
+                        </div>
+                        <GiCancel className="text-3xl text-red-800" onClick={() => props.setAlbumView('')} />
+                    </div>
                     <Upload />
                 </div>
-                <div className="grid w-full justify-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-5">
+                <div className="grid w-full h-max justify-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-5">
                 {albumData.images && albumData.images.map(image => 
                     <Image img={image.url} key={image.name} imageId={image._id} imageName={image.name} deleteImage={deleteImage} />
                 )}

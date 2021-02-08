@@ -62,26 +62,26 @@ export default function Contact() {
     }
 
     return (
-        <div className="contact h-screen flex justify-center items-center">
-            <div className="text-gray-200">
+        <div className="contact h-screen lg:flex lg:justify-center lg:items-center pt-16">
+            <div className="text-gray-200 px-4 py-8">
                 <h1 className="text-6xl">Contact me</h1>
                 <div className="w-full h-0.5 my-1 bg-gray-300" />
                 <p className="mb-12">I want to hear from you.</p>
 
-                <div className="flex mb-8">
+                <div className="flex items-center mb-8">
                     <ImPhone  className="mr-4 text-2xl" />
                     <p className="text-xl">+12 345 6789</p>
                 </div>
-                <div className="flex mb-16">
+                <div className="flex items-center mb-16">
                     <MdEmail className="mr-4 text-2xl" />
                     <p className="text-xl">test@email.com</p>
                 </div>
-                <div className="flex">
+                <div className="flex justify-center">
                     <FaFacebookF className="mr-4 p-2 text-6xl rounded-3xl hover:bg-gray-200 hover:text-blue-800" />
                     <FaTwitter className="mr-4 p-2 text-6xl rounded-3xl hover:bg-gray-200 hover:text-blue-800" />
                 </div>
             </div>
-            <form className="w-3/12 ml-24 p-10 shadow rounded-xl bg-gray-50" onSubmit={handleSubmit}>
+            <form className="w-full lg:w-6/12 lg:ml-12 xl:w-4/12 p-10 lg:rounded-xl shadow bg-gray-50" onSubmit={handleSubmit}>
                 <label className="font-bold">Your name</label>
                 <input className="contact_input w-full mb-8 px-2 py-4 outline-none rounded-xl"
                     type="text" placeholder={nameError} required
@@ -92,7 +92,7 @@ export default function Contact() {
                     value={email} onChange={(e) => setEmail(e.target.value)} />
                 <label className="font-bold">Message</label>
                 <textarea className="contact_input w-full mb-8 px-2 py-2 outline-none rounded-xl bg-gray-100"
-                    type="text" placeholder={messageError} required
+                    type="text" placeholder={messageError} required rows='5'
                     value={message} onChange={(e) => setMessage(e.target.value)} />
                 <button className="p-4 rounded bg-blue-800 text-white hover:bg-blue-600" type="submit">{status}</button>
             </form>
