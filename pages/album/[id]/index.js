@@ -31,7 +31,7 @@ export default function article({albums}) {
     }
 
     return (
-        <div className="pt-8">
+        <div className="pt-24">
             <h1 className="text-center text-4xl underline">{albumData.name}</h1>
             {/* Generate images */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 p-12">
@@ -62,14 +62,7 @@ export const ImageItem = ({imageData, toggleImage}) => {
 
 export const ImageModal = ({imageData, toggleImage}) => {
     return (
-        // <div className="flex justify-center content-center w-screen h-screen top-0 left-0">
-        //     <div className="absolute w-full h-full bg-gray-600 bg-opacity-50"
-        //         onClick={() => toggleImage()}></div>
-        //     <div className=" h-80">
-        //         <img src={imageData.url} alt={imageData.name} />
-        //     </div>
-        // </div>
-        <div className="w-screen h-screen flex justify-center items-center absolute top-0 left-0">
+        <div className="absolute top-0 left-0 flex justify-center items-center w-screen h-screen">
             <div className="w-full h-full bg-gray-50 bg-opacity-80"
                 onClick={() => toggleImage()}></div>
             <div className="absolute p-5 rounded bg-gray-100 shadow">

@@ -19,6 +19,18 @@
     display: block;
 }
 
+/* Contact */
+.contact {
+    background-image: url('../assets/contact_bg.jpg');
+    background-size: cover;
+}
+.contact_input {
+    border: 2px solid #ccc;
+}
+.contact_input:focus {
+    border: 2px solid #333;
+}
+
 /* Animations */
 .progbar {
     animation: mymove 2s infinite;

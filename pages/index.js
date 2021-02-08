@@ -11,7 +11,7 @@ export default function Home({albums}) {
   const albumList = useSelector(state => state.albumList);
 
   return (
-    <div>
+    <div className="pt-12">
       <Head>
         <title>Hello world</title>
         <meta name="aye" content='aye' />

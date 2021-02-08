@@ -68,7 +68,7 @@ export default function Dashboard() {
     }
 
     return (
-        <div>
+        <div className="pt-24">
             <div className="text-center">
                 <h1 className="text-6xl mb-5">Albums</h1>
                 <p className="w-max mx-auto p-2 rounded-xl text-xl bg-green-200 cursor-pointer hover:bg-green-400"
