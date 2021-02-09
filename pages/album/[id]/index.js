@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import Image from 'next/image'
 import {useRouter} from 'next/router';
 import {useState} from 'react';
@@ -37,6 +38,10 @@ export default function album({albums}) {
 
     return (
         <div className="min-h-screen pt-24">
+            <Head>
+                <title>{albumData.name}</title>
+                <meta name={albumData.name} content={albumData.name} />
+            </Head>
             <h1 className="text-center text-4xl underline">{albumData.name}</h1>
             {/* Generate images */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 p-12">
@@ -100,10 +105,11 @@ export const getServerSideProps = async (context) => {
     if (process.env.NODE_ENV === 'development') {
         res = await fetch(`http://localhost:3333/api/albums/?email=legion@gmail.com`)
         } else {
-        res = await fetch(`https://nextjs-sandbox-server.herokuapp.com/api/albums/?email=legion@gmail.com`)
+        res = await fetch(`https://nodejs-image-server-304317.ew.r.appspot.com/api/albums/?email=legion@gmail.com`)
         }
 
     const albums = await res.json()
+    console.log(albums)
 
     return {
         props: {

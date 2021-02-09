@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import { useState } from "react";
 import axios from 'axios';
 //icons
@@ -24,7 +25,7 @@ export default function Contact() {
     if (process.env.NODE_ENV === 'development') {
         apiUrl = 'http://localhost:3333'
         } else {
-        apiUrl = 'https://nextjs-sandbox-server.herokuapp.com'
+        apiUrl = 'https://nodejs-image-server-304317.ew.r.appspot.com'
         }
 
     const handleSubmit = async (e) => {
@@ -63,6 +64,10 @@ export default function Contact() {
 
     return (
         <div className="contact w-full h-screen lg:flex lg:justify-center lg:items-center pt-16">
+            <Head>
+                <title>Contact</title>
+                <meta name="Contact" content='contact' />
+            </Head>
             <div className="text-gray-200 px-4 py-8">
                 <h1 className="text-6xl">Contact me</h1>
                 <div className="w-full h-0.5 my-1 bg-gray-300" />

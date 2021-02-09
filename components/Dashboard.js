@@ -23,7 +23,7 @@ export default function Dashboard() {
     if (process.env.NODE_ENV === 'development') {
         apiUrl = 'http://localhost:3333'
         } else {
-        apiUrl = 'https://nextjs-sandbox-server.herokuapp.com'
+        apiUrl = 'https://nodejs-image-server-304317.ew.r.appspot.com'
         }
 
     const viewAlbum = (albumId) => {
