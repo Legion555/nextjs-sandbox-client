@@ -47,7 +47,7 @@ export async function getServerSideProps(context) {
   if (process.env.NODE_ENV === 'development') {
       res = await fetch(`http://localhost:3333/api/albums/?email=legion@gmail.com`)
     } else {
-      res = await fetch(`https://nodejs-image-server-304317.ew.r.appspot.com/api/albums/?email=legion@gmail.com`)
+      res = await fetch(`${process.env.serverAPI}/api/albums/?email=legion@gmail.com`)
     }
   const albums = await res.json()
 

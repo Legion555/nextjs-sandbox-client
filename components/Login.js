@@ -18,7 +18,7 @@ export default function Login() {
     if (process.env.NODE_ENV === 'development') {
         apiUrl = 'http://localhost:3333'
       } else {
-        apiUrl = 'https://nodejs-image-server-304317.ew.r.appspot.com'
+        apiUrl = process.env.serverAPI
       }
 
     //Login existing user - pass

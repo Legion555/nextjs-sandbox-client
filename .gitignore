@@ -13,7 +13,7 @@
 /out/
 
 # production
-
+.env.local
 
 # misc
 .DS_Store
