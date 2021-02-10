@@ -10,7 +10,6 @@ export default function Home({albums}) {
   const dispatch = useDispatch();
   dispatch(updateAlbumList(albums));
   const albumList = useSelector(state => state.albumList);
-  console.log(albumList)
 
   return (
     <div className="min-h-screen w-full pt-12">
@@ -32,7 +31,7 @@ export const AlbumItem = ({albumData}) => {
     <Link href="/album/[id]" as={`/album/${albumData._id}`} >
     <div className="home_albumItem relative w-full h-max cursor-pointer">
       <div className="relative w-full h-72">
-      {albumList.images &&
+      {albumData.images &&
         <Image className="home_albumItem_image object-cover" src={albumData.images[0].url} alt={albumData.name} layout='fill' />  
       }
       </div>

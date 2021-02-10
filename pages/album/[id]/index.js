@@ -64,7 +64,8 @@ export const ImageItem = ({imageData, toggleImage}) => {
             {!isLoaded &&
                 <SkeletonImageItem />
             }
-            <Image className="object-cover" src={imageData.url} alt={imageData.name} layout='fill' onLoad={() => setIsLoaded(true)} />
+            <Image className="object-cover" src={imageData.url} alt={imageData.name} layout='fill'
+                onLoad={() => setIsLoaded(true)} />
             {isLoaded &&
                 <div className="home_album_imageItem-overlay hidden h-12 relative bg-gradient-to-b from-gray-800 bg-opacity-75">
                     <p className="text-2xl text-white pt-2 pl-2">{imageData.name}</p>
