@@ -68,7 +68,7 @@ export default function Upload() {
     })
   }
   
-  //Client-MongoDB
+  //Add image-ref to mongoDB
   const addImage = (imageData) => {
     const payload = {
         userId: userData._id,
@@ -77,14 +77,23 @@ export default function Upload() {
         name: imageData.name,
         url: imageData.imgUrl
     }
-    console.log(payload)
-    axios.put(`${apiUrl}/api/images/add`, payload)
+    //get token
+    let token = sessionStorage.getItem('token');
+    axios.put(`${apiUrl}/api/images/add`, payload, {
+      headers: {
+        'auth-token': token
+      }
+    })
     .then(res => {
-        console.log(res)
+        //get token
+        let token = sessionStorage.getItem('token');
         //update local user data
         axios.get(`${apiUrl}/api/users`, {
             params: {
                 email: userData.email
+            },
+            headers: {
+              'auth-token': token
             }
         })
         .then(res => {

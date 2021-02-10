@@ -36,25 +36,40 @@ export default function Dashboard() {
             userId: userData._id,
             albumId: albumId
         }
-        axios.put(`${apiUrl}/api/albums/delete`, payload)
+        //get token
+        let token = sessionStorage.getItem('token');
+        axios.put(`${apiUrl}/api/albums/delete`, payload, {
+            headers: {
+                'auth-token': token
+            }
+        })
         .then(res => {
+            //get token
+            let token = sessionStorage.getItem('token');
+            //update local user data
             axios.get(`${apiUrl}/api/users`, {
                 params: {
                     email: userData.email
+                },
+                headers: {
+                    'auth-token': token
                 }
             })
             .then(res => {
-                albumImages.forEach(image => {
-                    //delete on firebase storage
-                    let imageRef = storage.ref(`/images/${image.name}`);
-                    imageRef.delete()
-                    .then(() => {
-                    
+                //check if any images exist
+                if (albumImages.images) {
+                    albumImages.forEach(image => {
+                        //delete on firebase storage
+                        let imageRef = storage.ref(`/images/${image.name}`);
+                        imageRef.delete()
+                        .then(() => {
+                        
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
                     })
-                    .catch(err => {
-                        console.log(err);
-                    })
-                })
+                }
                 //set user data
                 dispatch(updateUserData(res.data));
             })

@@ -31,7 +31,9 @@ export const AlbumItem = ({albumData}) => {
     <Link href="/album/[id]" as={`/album/${albumData._id}`} >
     <div className="home_albumItem relative w-full h-max cursor-pointer">
       <div className="relative w-full h-72">
-        <Image className="home_albumItem_image object-cover" src={albumData.images[0].url} alt={albumData.name} layout='fill' />
+      {albumData.images &&
+        <Image className="home_albumItem_image object-cover" src={albumData.images[0].url} alt={albumData.name} layout='fill' />  
+      }
       </div>
       <div className="w-max">
         <p className="text-2xl">{albumData.name}</p>

@@ -30,13 +30,23 @@ export default function AddAlbum(props) {
             albumId: genId(),
             albumName: albumName
         }
-        axios.put(`${apiUrl}/api/albums/create`, payload)
+        //get token
+        let token = sessionStorage.getItem('token');
+        axios.put(`${apiUrl}/api/albums/create`, payload, {
+            headers: {
+                'auth-token': token
+            }
+        })
         .then(res => {
-            console.log(res)
+            //get token
+            let token = sessionStorage.getItem('token');
             //update local user data
             axios.get(`${apiUrl}/api/users`, {
                 params: {
                     email: userData.email
+                },
+                headers: {
+                    'auth-token': token
                 }
             })
             .then(res => {

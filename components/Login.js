@@ -29,16 +29,22 @@ export default function Login() {
         }
         axios.post(`${apiUrl}/api/users/login`, details)
         .then(res => {
-            if (res.data === 'success') {
+            if (res.data.message === 'success') {
+                //set token for authenticated api calls
+                sessionStorage.setItem('token', res.data.token);
+                let token = sessionStorage.getItem('token');
+                //get user data
                 axios.get(`${apiUrl}/api/users`, {
                     params: {
                         email: 'legion@gmail.com'
+                    },
+                    headers: {
+                        'auth-token': token
                     }
                 })
                 .then(res => {
                     //set user data
                     dispatch(updateUserData(res.data))
-                    console.log(res.data)
                     //redirect to dashboard
                     dispatch(updateIsLoggedIn(true))
                 })
