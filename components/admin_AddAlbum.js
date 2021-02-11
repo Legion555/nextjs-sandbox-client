@@ -25,6 +25,9 @@ export default function AddAlbum(props) {
 
     const createAlbum = (e) => {
         e.preventDefault();
+        if (albumName === '') {
+            return window.alert('Insert album name');
+        }
         const payload = {
             userId: userData._id,
             albumId: genId(),

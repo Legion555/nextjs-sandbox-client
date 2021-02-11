@@ -1,11 +1,13 @@
 import axios from "axios";
+import { useState } from 'react';
 import Upload from './Upload';
 import { storage } from '../firebase/firebase';
+import Image from 'next/image'
 //redux
 import { useSelector, useDispatch } from 'react-redux';
 import { updateUserData, updateAlbumData} from '../actions';
 //icons
-import { BsTrash } from 'react-icons/bs';
+import { BsTrash, BsCardImage } from 'react-icons/bs';
 import { GiCancel } from 'react-icons/gi';
 
 export default function AddAlbum(props) {
@@ -70,9 +72,9 @@ export default function AddAlbum(props) {
     }
 
     return (
-        <div className="w-screen h-screen flex justify-center items-center absolute top-0 left-0">
+        <div className="w-full h-screen flex justify-center items-center absolute top-0 left-0">
             <div className="w-full h-full fixed bg-gray-400 bg-opacity-95" onClick={() => props.setAlbumView('')}></div>
-            <div className="w-max h-5/6 fixed px-5 py-3 rounded bg-gray-100 shadow overflow-y-scroll">
+            <div className="w-full md:w-10/12 h-5/6 fixed px-5 py-3 rounded bg-gray-100 shadow overflow-y-scroll">
                 <div>
                     <div className="flex justify-between items-center">
                         <div>
@@ -86,7 +88,7 @@ export default function AddAlbum(props) {
                 </div>
                 <div className="grid w-full h-max justify-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-5">
                 {albumData.images && albumData.images.map(image => 
-                    <Image img={image.url} key={image.name} imageId={image._id} imageName={image.name} deleteImage={deleteImage} />
+                    <ImageItem img={image.url} key={image.name} imageId={image._id} imageName={image.name} deleteImage={deleteImage} />
                 )}
                 </div>
             </div>
@@ -94,15 +96,30 @@ export default function AddAlbum(props) {
     )
 }
 
-function Image(props) {
+function ImageItem(props) {
+    const [isLoaded, setIsLoaded] = useState(false);
+
     return (
-        <div className="w-72 max-h-72">
-            <img src={props.img} alt="" className="w-full h-full object-cover" />
-            <div className="w-full h-full relative bottom-full opacity-0 hover:opacity-100">
+        <div className="relative h-64 xl:h-80">
+            {!isLoaded &&
+                <SkeletonImageItem />
+            }
+            <Image className="object-cover" src={props.img} alt={props.imageName} layout='fill'
+                onLoad={() => setIsLoaded(true)} />
+            <div className="w-full h-full relative opacity-0 hover:opacity-100">
                 <BsTrash className="float-right text-5xl text-red-600 bg-gray-200 mt-2 mr-2 p-2 rounded-xl cursor-pointer hover:bg-red-600 hover:text-gray-200"
                     onClick={() => props.deleteImage(props.imageId, props.imageName)} />
             </div>
         </div>
         
+    )
+}
+
+export const SkeletonImageItem = () => {
+    return (
+        <div className="flex justify-center items-center flex-col w-full h-full bg-gray-200">
+            <BsCardImage className="text-6xl" />
+            <p>Image is loading...</p>
+        </div>
     )
 }

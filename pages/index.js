@@ -32,7 +32,7 @@ export const AlbumItem = ({albumData}) => {
     <div className="home_albumItem relative w-full h-max cursor-pointer">
       <div className="relative w-full h-72">
       {albumData.images &&
-        <Image className="home_albumItem_image object-cover" src={albumData.images[0].url} alt={albumData.name} layout='fill' />  
+        <Image className="home_albumItem_image object-cover" src={albumData.images[0].url} alt={albumData.name} layout='fill' />
       }
       </div>
       <div className="w-max">

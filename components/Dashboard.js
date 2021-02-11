@@ -31,10 +31,10 @@ export default function Dashboard() {
         setAlbumView('view');
     }
     
-    const deleteAlbum = (albumId, albumImages) => {
+    const deleteAlbum = (albumData) => {
         const payload = {
             userId: userData._id,
-            albumId: albumId
+            albumId: albumData._id
         }
         //get token
         let token = sessionStorage.getItem('token');
@@ -57,8 +57,8 @@ export default function Dashboard() {
             })
             .then(res => {
                 //check if any images exist
-                if (albumImages.images) {
-                    albumImages.forEach(image => {
+                if (albumData.images) {
+                    albumData.images.forEach(image => {
                         //delete on firebase storage
                         let imageRef = storage.ref(`/images/${image.name}`);
                         imageRef.delete()
@@ -92,8 +92,7 @@ export default function Dashboard() {
             <div className="grid justify-items-center w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-10">
                 {userData.albums.map(album => 
                     <Album name={album.name} key={album._id}
-                        albumId={album._id} albumImages={album.images}
-                        thumbnailUrl={album.images && album.images[0] && album.images[0].url}
+                        albumData={album}
                         viewAlbum={viewAlbum} deleteAlbum={deleteAlbum} />
                 )}
             </div>
@@ -108,18 +107,35 @@ export default function Dashboard() {
 }
 
 
-function Album(props) {
+function Album({albumData, viewAlbum, deleteAlbum}) {
+    const [deleteModal, setDeleteModal] = useState(false);
+    
     return (
+        <>
         <div className="w-72 h-max flex flex-col justify-between shadow rounded-xl">
-            <img src={props.thumbnailUrl} alt="" className="w-full h-56 object-cover rounded-xl" />
-            <p className="text-center py-2">{props.name}</p>
+            <img src={albumData.images && albumData.images[0].url} alt="" className="w-full h-56 object-cover rounded-xl" />
+            <p className="text-center py-2">{albumData.name}</p>
             <div className="flex justify-evenly p-2">
                 <ImEye className="text-5xl text-blue-600 p-2 rounded-2xl cursor-pointer hover:bg-blue-600 hover:text-white"
-                    onClick={() => props.viewAlbum(props.albumId)} />
+                    onClick={() => viewAlbum(albumData._id)} />
                 <BsTrash className="text-5xl text-red-600 p-2 rounded-2xl cursor-pointer hover:bg-red-600 hover:text-white"
-                    onClick={() => props.deleteAlbum(props.albumId, props.albumImages)} />
+                    onClick={() => setDeleteModal(true)} />
             </div>
         </div>
-        
+        {deleteModal &&
+            <div className="w-screen h-screen flex justify-center items-center absolute top-0 left-0">
+                <div className="w-full h-full bg-gray-50 bg-opacity-80" onClick={() => setDeleteModal(false)}></div>
+                <div className="w-max absolute px-5 py-3 rounded bg-gray-200 shadow">
+                    <p className="text-center text-2xl mb-5">Are you sure you want to delete this album?</p>
+                    <div className="flex justify-center">
+                        <button className="mr-8 px-4 py-2 rounded-xl bg-blue-800 text-gray-200 hover:bg-blue-600"
+                            onClick={() => deleteAlbum(albumData)}>Yes</button>
+                        <button className="px-4 py-2 rounded-xl bg-red-800 text-gray-200 hover:bg-red-600"
+                            onClick={() => setDeleteModal(false)}>No</button>
+                    </div>
+                </div>
+            </div>
+        }
+        </>
     )
 }

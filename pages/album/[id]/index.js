@@ -45,7 +45,7 @@ export default function album({albums}) {
             <h1 className="text-center text-4xl underline">{albumData.name}</h1>
             {/* Generate images */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 p-12">
-            {albumData.images.map(image => 
+            {albumData.images && albumData.images.map(image => 
                 <ImageItem imageData={image} toggleImage={toggleImage} key={image.name} />
             )}
             </div>
@@ -58,6 +58,7 @@ export default function album({albums}) {
 
 export const ImageItem = ({imageData, toggleImage}) => {
     const [isLoaded, setIsLoaded] = useState(false);
+    
     return (
         <div className="home_album_imageItem relative w-full h-72 cursor-pointer"
             onClick={() => toggleImage(imageData)}>

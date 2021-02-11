@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { storage } from '../firebase/firebase'
 import 'firebase/storage';
+import imageCompression  from "browser-image-compression";
 //redux
 import { useSelector, useDispatch } from 'react-redux';
 import { updateUserData, updateAlbumData } from '../actions'
@@ -48,21 +49,23 @@ export default function Upload() {
       if(image === '') {
         return console.error('Not an image');
       }
-      console.log(imageAsFile[0]);
-      setView('uploading');
-      //Upload image
-      const uploadTask = storage.ref(`/images/${image.name}`).put(image)
-      uploadTask.on('state_changed',
-      (snapShot) => {
-        // console.log(snapShot)
-      }, (err) => {
-        console.log(err)
-      }, () => {
-        storage.ref('images').child(image.name).getDownloadURL()
-        .then(fireBaseUrl => {
-          image.imgUrl = fireBaseUrl;
-          addImage(image);
-          setView('uploaded');
+      imageCompression(image, {maxSizeMB: 1, maxWidthOrHeight: 1080})
+      .then(compressedFile => {
+        setView('uploading');
+        //Upload image
+        const uploadTask = storage.ref(`/images/${compressedFile.name}`).put(compressedFile)
+        uploadTask.on('state_changed',
+        (snapShot) => {
+          console.log(snapShot)
+        }, (err) => {
+          console.log(err)
+        }, () => {
+          storage.ref('images').child(compressedFile.name).getDownloadURL()
+          .then(fireBaseUrl => {
+            compressedFile.imgUrl = fireBaseUrl;
+            addImage(compressedFile);
+            setView('uploaded');
+          })
         })
       })
     })
@@ -133,21 +136,27 @@ export default function Upload() {
         return console.error('Not an image');
       }
       console.log('start of upload');
-      setView('uploading');
-      //Upload image
-      const uploadTask = storage.ref(`/images/${image.name}`).put(image)
-      uploadTask.on('state_changed',
-      (snapShot) => {
-        console.log(snapShot)
-      }, (err) => {
-        console.log(err)
-      }, () => {
-        storage.ref('images').child(image.name).getDownloadURL()
-        .then(fireBaseUrl => {
-          image.imgUrl = fireBaseUrl;
-          addImage(image);
-          setView('uploaded');
+      imageCompression(image, {maxSizeMB: 1, maxWidthOrHeight: 1080})
+      .then(compressedFile => {
+        setView('uploading');
+        //Upload image
+        const uploadTask = storage.ref(`/images/${compressedFile.name}`).put(compressedFile)
+        uploadTask.on('state_changed',
+        (snapShot) => {
+          console.log(snapShot)
+        }, (err) => {
+          console.log(err)
+        }, () => {
+          storage.ref('images').child(compressedFile.name).getDownloadURL()
+          .then(fireBaseUrl => {
+            compressedFile.imgUrl = fireBaseUrl;
+            addImage(compressedFile);
+            setView('uploaded');
+          })
         })
+      })
+      .catch(err => {
+        console.log(err)
       })
     })
   }
