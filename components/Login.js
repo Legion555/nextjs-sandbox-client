@@ -11,7 +11,7 @@ export default function Login() {
     
     const [errorHandle, setErrorHandle] = useState([]);
     //Login
-    const [loginPassword, setLoginPassword] = useState('');
+    const [loginPassword, setLoginPassword] = useState('legion123');
 
     //api url
     let apiUrl;

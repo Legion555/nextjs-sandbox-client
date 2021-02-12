@@ -1,6 +1,6 @@
 //components
 import Login from '../components/Login'
-import Dashboard from '../components/Dashboard'
+import DashboardRouter from '../components/DashboardRouter'
 //redux
 import { useSelector } from 'react-redux';
 
@@ -12,7 +12,7 @@ export default function Admin() {
     return (
         <div>
             {isLoggedIn ?
-                <Dashboard />
+                <DashboardRouter />
                 :
                 <Login />
             }

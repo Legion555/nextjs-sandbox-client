@@ -25,14 +25,16 @@ export default function Nav() {
                 {showMenu &&
                     <div className="absolute left-0 mt-4 w-full h-max bg-gray-200">
                         <Link href="/"><p className="mx-2 p-2 cursor-pointer rounded-xl hover:bg-gray-200" onClick={toggleMenu}>Gallery</p></Link>
+                        <Link href="/blog"><p className="mx-2 p-2 cursor-pointer rounded-xl hover:bg-gray-200" onClick={toggleMenu}>Blog</p></Link>
                         <Link href="/contact"><p className="mx-2 p-2 cursor-pointer rounded-xl hover:bg-gray-200" onClick={toggleMenu}>Contact</p></Link>
-                        <Link href="/admin"><p className="mx-2 p-2 cursor-pointer rounded-xl hover:bg-gray-200" onClick={toggleMenu}>Dashboard</p></Link>
+                        <Link href="/dashboard"><p className="mx-2 p-2 cursor-pointer rounded-xl hover:bg-gray-200" onClick={toggleMenu}>Dashboard</p></Link>
                     </div>
                 }
             </div>
             {/* Screen: Tablet+ */}
             <div className="hidden md:flex">
                 <Link href="/"><p className="mx-2 p-2 cursor-pointer rounded-xl hover:bg-gray-200">Gallery</p></Link>
+                <Link href="/blog"><p className="mx-2 p-2 cursor-pointer rounded-xl hover:bg-gray-200">Blog</p></Link>
                 <Link href="/contact"><p className="mx-2 p-2 cursor-pointer rounded-xl hover:bg-gray-200">Contact</p></Link>
                 <Link href="/admin"><p className="mx-2 p-2 cursor-pointer rounded-xl hover:bg-gray-200">Dashboard</p></Link>
             </div>

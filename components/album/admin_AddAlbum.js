@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react"
 //redux
 import { useSelector, useDispatch } from 'react-redux';
-import { updateUserData } from '../actions';
+import { updateUserData } from '../../actions';
 
 export default function AddAlbum(props) {
     const dispatch = useDispatch();
@@ -19,7 +19,7 @@ export default function AddAlbum(props) {
         }
 
     const genId = () => {
-        return Math.floor(Math.random() * 1000000)
+        return Math.floor(Math.random() * 1000000000)
     }
     
 

@@ -111,7 +111,6 @@ export const getServerSideProps = async (context) => {
         }
 
     const albums = await res.json()
-    console.log(albums)
 
     return {
         props: {

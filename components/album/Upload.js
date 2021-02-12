@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { useState } from 'react';
-import { storage } from '../firebase/firebase'
+import { storage } from '../../firebase/firebase'
 import 'firebase/storage';
 import imageCompression  from "browser-image-compression";
 //redux
 import { useSelector, useDispatch } from 'react-redux';
-import { updateUserData, updateAlbumData } from '../actions'
+import { updateUserData, updateAlbumData } from '../../actions'
 //icons
 import { AiOutlineCheckCircle } from 'react-icons/ai';
 import { BsCardImage } from 'react-icons/bs';

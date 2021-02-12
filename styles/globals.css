@@ -26,6 +26,11 @@
     display: block;
 }
 
+/* Admin: Blog */
+.admin__AddEntry-textfield:hover .admin__AddEntry-textfield-overlay {
+    opacity: 1;
+}
+
 /* Contact */
 .contact {
     background-image: url('../assets/contact_bg.jpg');

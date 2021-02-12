@@ -1,11 +1,11 @@
 import axios from "axios";
 import { useState } from 'react';
 import Upload from './Upload';
-import { storage } from '../firebase/firebase';
+import { storage } from '../../firebase/firebase';
 import Image from 'next/image'
 //redux
 import { useSelector, useDispatch } from 'react-redux';
-import { updateUserData, updateAlbumData} from '../actions';
+import { updateUserData, updateAlbumData} from '../../actions';
 //icons
 import { BsTrash, BsCardImage } from 'react-icons/bs';
 import { GiCancel } from 'react-icons/gi';

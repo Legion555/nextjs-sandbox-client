@@ -10,7 +10,7 @@ const store = createStore(
   rootReducer
 )
 
-function MyApp({ Component, pageProps, albums }) {
+function MyApp({ Component, pageProps }) {
   return (
     <Provider store={store}>
       <Layout>
