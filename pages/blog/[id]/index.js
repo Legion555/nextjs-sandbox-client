@@ -20,19 +20,20 @@ export default function album({blog}) {
     const entryData = blog.filter(entry => entry._id === id)[0];
 
     return (
-        <div className="min-h-screen pt-24">
+        <div className="w-full md:w-9/12 lg:w-6/12 min-h-screen m-auto pt-24">
             <Head>
                 <title>{entryData.name}</title>
                 <meta name={entryData.name} content={entryData.name} />
             </Head>
-            <div className="relative w-full md:w-9/12 lg:w-6/12 h-80 m-auto">
-              <Image className="object-cover" src={entryData.thumbnail} alt="thumbnail" layout="fill" />
+            <div>
+              <div className="relative w-full h-80 m-auto">
+                <Image className="object-cover" src={entryData.thumbnail} alt="thumbnail" layout="fill" />
+              </div>
+              <h1 className="max-w-full w-11/12 md:w-9/12 relative bottom-4 m-auto px-2 rounded text-center text-4xl font-bold bg-white">{entryData.name}</h1>
+              <div className="w-full m-auto p-4 text-xl">
+                <p className="whitespace-pre-line">{entryData.content}</p>
+              </div>
             </div>
-            <h1 className="w-max relative bottom-4 m-auto px-2 rounded text-center text-4xl font-bold bg-white">{entryData.name}</h1>
-            <div className="w-full md:w-9/12 lg:w-6/12 m-auto p-4 text-xl">
-              <p className="whitespace-pre-line">{entryData.content}</p>
-            </div>
-            
         </div>
     )
 }

@@ -20,7 +20,7 @@ export default function Nav() {
                 <p className="p-2">Legion Photography</p>
             </div>
             {/* Screen: Mobile */}
-            <div className="block md:hidden z-50">
+            <div className="block md:hidden z-0">
                 <AiOutlineMenu className="p-2 text-4xl" onClick={toggleMenu} />
                 {showMenu &&
                     <div className="absolute left-0 mt-4 w-full h-max bg-gray-200">

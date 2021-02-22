@@ -112,7 +112,7 @@ export default function AddEntry(props) {
     return (
         <div className="w-full h-screen flex justify-center items-center fixed top-0 left-0">
             {/* Modal */}
-            <div className="w-full h-full absolute flex flex-col justify-between px-5 py-3 rounded bg-white shadow overflow-y-scroll">
+            <div className="w-full h-full absolute flex flex-col justify-between px-5 py-3 rounded bg-white shadow overflow-y-scroll z-50">
                 <div className="w-full h-16 static flex justify-between items-center">
                     <button className="p-2 text-2xl rounded-xl text-gray-200 bg-blue-800 hover:bg-blue-600"
                         onClick={submitData} >Save entry</button>
