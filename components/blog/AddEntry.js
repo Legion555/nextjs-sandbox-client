@@ -12,6 +12,10 @@ import { BsTextareaT, BsImages, BsCardImage } from 'react-icons/bs';
 import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
 import { GiCancel } from 'react-icons/gi';
 
+const genId = () => {
+    return Math.floor(Math.random() * 1000000000)
+}
+
 
 
 export default function AddEntry(props) {
@@ -20,7 +24,7 @@ export default function AddEntry(props) {
 
     const [entryName, setEntryName] = useState('');
     const [entryThumbnail, setEntryThumbnail] = useState('');
-    const [blogContent, setBlogContent] = useState([]);
+    const [blogContent, setBlogContent] = useState('');
     const [editData, setEditData] = useState('');
     const [addCounter, setAddCounter] = useState(0);
 
@@ -31,10 +35,6 @@ export default function AddEntry(props) {
         } else {
         apiUrl = process.env.serverAPI
         }
-
-    const genId = () => {
-        return Math.floor(Math.random() * 1000000000)
-    }
 
     const addTextField = () => {
         let newBlogContent = blogContent;
@@ -113,93 +113,45 @@ export default function AddEntry(props) {
         <div className="w-full h-screen flex justify-center items-center fixed top-0 left-0">
             {/* Modal */}
             <div className="w-full h-full absolute flex flex-col justify-between px-5 py-3 rounded bg-white shadow overflow-y-scroll">
-                <div>
+                <div className="w-full h-16 static flex justify-between items-center">
+                    <button className="p-2 text-2xl rounded-xl text-gray-200 bg-blue-800 hover:bg-blue-600"
+                        onClick={submitData} >Save entry</button>
                     <h1 className="text-center text-3xl">Create new entry</h1>
-                    <div className="flex mb-8 justify-between">
-                        <div className="flex">
-                            {/* Add text button */}
-                            <div className="flex items-center mr-4 p-2 rounded-xl bg-blue-400 hover:bg-blue-600 cursor-pointer"
-                                onClick={addTextField}>
-                                <BsTextareaT className="text-4xl" />
-                                <p className="text-2xl">Add text</p>
-                            </div>
-                            {/* Add image button */}
-                            {/* <div className="flex items-center p-2 rounded-xl bg-blue-400 hover:bg-blue-600 cursor-pointer"
-                                onClick={addImageField}>
-                                <BsImages className="text-4xl" />
-                                <p className="text-2xl">Add image</p>
-                            </div> */}
+                    <GiCancel className="p-2 text-6xl text-red-800 rounded-2xl hover:bg-red-800 hover:text-gray-200" onClick={() => props.setFunctionView('')} />
+                    {/* <div className="flex">
+                        <div className="flex items-center p-2 rounded-xl bg-blue-400 hover:bg-blue-600 cursor-pointer"
+                            onClick={addImageField}>
+                            <BsImages className="text-4xl" />
+                            <p className="text-2xl">Add image</p>
                         </div>
-                        <GiCancel className="p-2 text-6xl text-red-800 rounded-2xl hover:bg-red-800 hover:text-gray-200" onClick={() => props.setFunctionView('')} />
-                    </div>
-                    <div className="p-4" style={{border: '1px solid gray'}}>
-                        <div>
+                    </div> */}
+                </div>
+                <div className="flex justify-center mt-16">
+                    <div className="w-full md:w-9/12 xl:w-6/12 p-4">
+                        <div className="mb-8">
                             <label className="font-bold text-xl">Title:</label><br/>
                             <input className="w-full p-2 text-2xl" style={{borderBottom: '1px solid gray'}} type="text" placeholder="input title"
                                 value={entryName} onChange={(e) => setEntryName(e.target.value)} />
                         </div>
+                        <ThumbnailUpload entryThumbnail={entryThumbnail} setEntryThumbnail={setEntryThumbnail} />
                         <div>
-                            <label className="font-bold text-xl">Thumbnail:</label>
-                            <ThumbnailUpload entryThumbnail={entryThumbnail} setEntryThumbnail={setEntryThumbnail} />
+                            <textarea rows={8} className="w-full pt-4 pl-4 text-xl" placeholder="Type your story here" autoFocus
+                                value={blogContent} onChange={(e) => setBlogContent(e.target.value)} ></textarea>
+                            {/* <div className="flex h-12">
+                                <button className="h-full px-2 text-gray-200 focus:outline-none bg-blue-800 hover:bg-blue-600"
+                                    onClick={() => {props.addTextToArray(props.itemData._id); setEditStatus(false)}} >Submit</button>
+                                <GiCancel className="h-full px-2 text-4xl text-red-800 hover:bg-red-800 hover:text-gray-200"
+                                    onClick={() => setEditStatus(false)} />
+                                <FaTrashAlt className="h-full px-2 text-4xl text-red-800 hover:bg-red-800 hover:text-gray-200"
+                                    onClick={() => props.removeTextField(props.itemData._id)} />
+                            </div> */}
                         </div>
                     </div>
-                    <div className="mt-8">
-                        {blogContent.map(item => 
-                            item.type == 'text' ?
-                            <TextField key={item._id} itemData={item}
-                                editData={editData} setEditData={setEditData}
-                                removeTextField={removeTextField} addTextToArray={addTextToArray} />
-                            :
-                            <ImageField key={item._id} itemData={item}
-                                blogContent={blogContent} setBlogContent={setBlogContent}
-                                editData={editData} setEditData={setEditData}
-                                removeTextField={removeTextField} addTextToArray={addTextToArray} />
-                        )}
-                    </div>
                 </div>
-                {blogContent.length && blogContent[0].content !== 'insert text here' &&
-                <button className="mt-8 p-2 text-2xl rounded-xl text-gray-200 bg-blue-800 hover:bg-blue-600"
-                    onClick={submitData} >Confirm</button>
-                }
             </div>
         </div>
     )
 }
-
-function TextField(props) {
-    const [editStatus, setEditStatus] = useState(true)
-
-    return (
-        <div className="admin__AddEntry-textfield mb-8">
-            {!editStatus ?
-                <div>
-                    <p className="w-full pt-4 pl-4 text-xl whitespace-pre-line">{props.itemData.content}</p>
-                    <div className="admin__AddEntry-textfield-overlay flex mt-4 opacity-25">
-                        <FaPencilAlt className="p-2 text-4xl text-green-800 hover:bg-green-800 hover:text-gray-200"
-                            onClick={() => {setEditStatus(true); props.setEditData(props.itemData.content)}} />
-                        <FaTrashAlt className="p-2 text-4xl text-red-800 hover:bg-red-800 hover:text-gray-200"
-                            onClick={() => props.removeTextField(props.itemData._id)} />
-                    </div>
-                </div>
-                :
-                <div>
-                    <textarea rows={8} className="w-full pt-4 pl-4 text-xl" placeholder="type stuff here" autoFocus
-                        value={props.editData} onChange={(e) => props.setEditData(e.target.value)} ></textarea>
-                    <div className="flex h-12">
-                        <button className="h-full px-2 text-gray-200 focus:outline-none bg-blue-800 hover:bg-blue-600"
-                            onClick={() => {props.addTextToArray(props.itemData._id); setEditStatus(false)}} >Submit</button>
-                        <GiCancel className="h-full px-2 text-4xl text-red-800 hover:bg-red-800 hover:text-gray-200"
-                            onClick={() => setEditStatus(false)} />
-                        <FaTrashAlt className="h-full px-2 text-4xl text-red-800 hover:bg-red-800 hover:text-gray-200"
-                            onClick={() => props.removeTextField(props.itemData._id)} />
-                    </div>
-                </div>
-            }
-        </div>
-    )
-}
-
-
 
 // function ImageField(props) {
     // const [dropStyle, setDropStyle] = useState({borderColor: 'gray'})

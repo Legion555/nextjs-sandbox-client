@@ -5,8 +5,6 @@ import axios from 'axios';
 import {FaFacebookF, FaTwitter} from 'react-icons/fa';
 import {MdEmail} from 'react-icons/md';
 import {ImPhone} from 'react-icons/im';
-//images
-import Image from 'next/image'
 
 
 export default function Contact() {
@@ -101,7 +99,6 @@ export default function Contact() {
                     value={message} onChange={(e) => setMessage(e.target.value)} />
                 <button className="p-4 rounded bg-blue-800 text-white hover:bg-blue-600" type="submit">{status}</button>
             </form>
-            
         </div>
     )
 }

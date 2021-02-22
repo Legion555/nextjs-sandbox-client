@@ -14,6 +14,7 @@ import { GiCancel } from 'react-icons/gi';
 export default function album({blog}) {
     const router = useRouter();
     const id = parseInt(router.query.id, 10);
+    
 
     //set local albumData
     const entryData = blog.filter(entry => entry._id === id)[0];
@@ -24,14 +25,12 @@ export default function album({blog}) {
                 <title>{entryData.name}</title>
                 <meta name={entryData.name} content={entryData.name} />
             </Head>
-            <h1 className="text-center text-4xl font-bold">{entryData.name}</h1>
+            <div className="relative w-full md:w-9/12 lg:w-6/12 h-80 m-auto">
+              <Image className="object-cover" src={entryData.thumbnail} alt="thumbnail" layout="fill" />
+            </div>
+            <h1 className="w-max relative bottom-4 m-auto px-2 rounded text-center text-4xl font-bold bg-white">{entryData.name}</h1>
             <div className="w-full md:w-9/12 lg:w-6/12 m-auto p-4 text-xl">
-                {entryData.content.map(item => 
-                    item.type == 'text' ?
-                    <p className="whitespace-pre-line">{item.content}</p>
-                    :
-                    <p>Image comes here</p>
-                )}
+              <p className="whitespace-pre-line">{entryData.content}</p>
             </div>
             
         </div>
