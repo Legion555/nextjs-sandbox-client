@@ -1,15 +1,31 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
+import axios from 'axios'
 //redux
 import { useDispatch, useSelector } from 'react-redux'
 import { updateAlbumList } from '../actions'
+import { useEffect } from 'react'
 
 export default function Home({albums}) {
   //Get album data
   const dispatch = useDispatch();
-  dispatch(updateAlbumList(albums));
   const albumList = useSelector(state => state.albumList);
+
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'development') {
+      axios.get('http://localhost:3333/api/albums/?email=legion@gmail.com')
+      .then(result => {
+        dispatch(updateAlbumList(result.data));
+      }).catch(err => console.log(err))
+    } else {
+      axios.get(`${process.env.serverAPI}/api/albums/?email=legion@gmail.com`)
+      .then(result => {
+        dispatch(updateAlbumList(result.data));
+      }).catch(err => console.log(err))
+    }
+  }, [])
+  
 
   return (
     <div className="min-h-screen w-full pt-12">
@@ -44,24 +60,24 @@ export const AlbumItem = ({albumData}) => {
   )
 }
 
-export async function getServerSideProps(context) {
-  let res;
-  if (process.env.NODE_ENV === 'development') {
-      res = await fetch(`http://localhost:3333/api/albums/?email=legion@gmail.com`)
-    } else {
-      res = await fetch(`${process.env.serverAPI}/api/albums/?email=legion@gmail.com`)
-    }
-  const albums = await res.json()
+// export async function getServerSideProps(context) {
+//   let res;
+//   if (process.env.NODE_ENV === 'development') {
+//       res = await fetch(`http://localhost:3333/api/albums/?email=legion@gmail.com`)
+//     } else {
+//       res = await fetch(`${process.env.serverAPI}/api/albums/?email=legion@gmail.com`)
+//     }
+//   const albums = await res.json()
 
-  if (!albums) {
-    return {
-      notFound: true,
-    }
-  }
+//   if (!albums) {
+//     return {
+//       notFound: true,
+//     }
+//   }
   
-  return {
-    props: {
-      albums
-    }
-  }
-}
+//   return {
+//     props: {
+//       albums
+//     }
+//   }
+// }
