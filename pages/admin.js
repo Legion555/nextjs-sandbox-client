@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 
 
 export default function Admin() {
-    const isLoggedIn = useSelector(state => state.isLoggedIn);
+    const isLoggedIn = useSelector(state => state.isLoggedIn.value);
 
     return (
         <div>
@@ -16,7 +16,6 @@ export default function Admin() {
                 :
                 <Login />
             }
-            
         </div>
     )
 }

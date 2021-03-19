@@ -3,8 +3,8 @@ import Image from 'next/image'
 import {useRouter} from 'next/router';
 import {useState} from 'react';
 //redux
-import {useSelector, useDispatch} from 'react-redux'
-import {updateAlbumList} from '../../../actions'
+import {useDispatch} from 'react-redux'
+import {updateAlbumList} from '../../../slices/albumListSlice'
 //icons
 import { BsCardImage } from 'react-icons/bs';
 import { GiCancel } from 'react-icons/gi';
@@ -21,7 +21,6 @@ export default function album({albums}) {
 
     //set local albumData
     const albumData = albums.filter(album => album._id === id)[0];
-    console.log(albumData)
 
     const [imageView, setImageView] = useState(false);
     const [imageData, setImageData] = useState({});
@@ -60,19 +59,13 @@ export const ImageItem = ({imageData, toggleImage}) => {
     const [isLoaded, setIsLoaded] = useState(false);
     
     return (
-        <div className="home_album_imageItem relative w-full h-72 cursor-pointer"
+        <div className={`home_album_imageItem relative w-full h-72 cursor-pointer ${isLoaded ? 'bg-none animate-none' : 'bg-gray-400 animate-pulse'}`}
             onClick={() => toggleImage(imageData)}>
-            {!isLoaded &&
-                <SkeletonImageItem />
-            }
             <Image className="object-cover" src={imageData.url} alt={imageData.name} layout='fill'
-                onLoad={() => setIsLoaded(true)} />
-            {isLoaded &&
-                <div className="home_album_imageItem-overlay hidden h-12 relative bg-gradient-to-b from-gray-800 bg-opacity-75">
-                    <p className="text-2xl text-white pt-2 pl-2">{imageData.name}</p>
-                </div>
-            }
-            
+            onLoad={() => setIsLoaded(true)} />
+            <div className="home_album_imageItem-overlay hidden h-12 relative bg-gradient-to-b from-gray-800 bg-opacity-75">
+                <p className="text-2xl text-white pt-2 pl-2">{imageData.name}</p>
+            </div>
         </div>
     )
 }

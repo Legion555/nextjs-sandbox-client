@@ -2,11 +2,13 @@ import axios from "axios";
 import { useState } from "react"
 //redux
 import { useSelector, useDispatch } from 'react-redux';
-import { updateUserData } from '../../actions';
+import { updateUserData } from '../../slices/userDataSlice';
+
+
 
 export default function AddAlbum(props) {
     const dispatch = useDispatch();
-    const userData = useSelector(state => state.userData)
+    const userData = useSelector(state => state.userData.value)
 
     const [albumName, setAlbumName] = useState('');
 

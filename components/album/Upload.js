@@ -5,7 +5,8 @@ import 'firebase/storage';
 import imageCompression  from "browser-image-compression";
 //redux
 import { useSelector, useDispatch } from 'react-redux';
-import { updateUserData, updateAlbumData } from '../../actions'
+import { updateUserData } from '../../slices/userDataSlice';
+import { updateAlbumData } from '../../slices/albumDataSlice';
 //icons
 import { AiOutlineCheckCircle } from 'react-icons/ai';
 import { BsCardImage } from 'react-icons/bs';
@@ -16,11 +17,13 @@ const genId = () => {
   return Math.floor(Math.random() * 1000000);
 }
 
+
+
 export default function Upload() {
   const dispatch = useDispatch();
 
-  const userData = useSelector(state => state.userData);
-  const albumData = useSelector(state => state.albumData);
+  const userData = useSelector(state => state.userData.value);
+  const albumData = useSelector(state => state.albumData.value);
   const [view, setView] = useState('upload');
 
   const [imageAsFile, setImageAsFile] = useState('');

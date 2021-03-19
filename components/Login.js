@@ -2,7 +2,8 @@ import { useState } from 'react';
 import axios from 'axios';
 //redux
 import { useDispatch } from 'react-redux';
-import { updateUserData, updateIsLoggedIn } from '../actions'
+import { updateUserData } from '../slices/userDataSlice';
+import { updateIsLoggedIn } from '../slices/isLoggedInSlice';
 
 
 

@@ -5,15 +5,18 @@ import { storage } from '../../firebase/firebase';
 import Image from 'next/image'
 //redux
 import { useSelector, useDispatch } from 'react-redux';
-import { updateUserData, updateAlbumData} from '../../actions';
+import { updateUserData } from '../../slices/userDataSlice';
+import { updateAlbumData } from '../../slices/albumDataSlice';
 //icons
 import { BsTrash, BsCardImage } from 'react-icons/bs';
 import { GiCancel } from 'react-icons/gi';
 
+
+
 export default function AddAlbum(props) {
     const dispatch = useDispatch();
-    const userData = useSelector(state => state.userData);
-    const albumData = useSelector(state => state.albumData);
+    const userData = useSelector(state => state.userData.value);
+    const albumData = useSelector(state => state.albumData.value);
 
     //api url
     let apiUrl;

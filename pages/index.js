@@ -1,16 +1,18 @@
+import { useState, useEffect } from 'react'
+import axios from 'axios'
 import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
-import axios from 'axios'
 //redux
 import { useDispatch, useSelector } from 'react-redux'
-import { updateAlbumList } from '../actions'
-import { useEffect } from 'react'
+import { updateAlbumList } from '../slices/albumListSlice'
+
+
 
 export default function Home({albums}) {
   //Get album data
   const dispatch = useDispatch();
-  const albumList = useSelector(state => state.albumList);
+  const albumList = useSelector(state => state.albumList.value);
 
   useEffect(() => {
     if (process.env.NODE_ENV === 'development') {
@@ -26,7 +28,6 @@ export default function Home({albums}) {
     }
   }, [])
   
-
   return (
     <div className="min-h-screen w-full pt-12">
       <Head>
@@ -34,21 +35,34 @@ export default function Home({albums}) {
         <meta name="Gallery" content='gallery' />
       </Head>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 p-12">
-        {albumList.map(album => 
-          <AlbumItem albumData={album} key={album._id} /> 
-        )}
+        {albumList ?
+          albumList.map(album => 
+            <AlbumItem albumData={album} key={album._id} /> 
+          )
+        :
+        <>
+          <SkeletonCard />
+          <SkeletonCard />
+          <SkeletonCard />
+          <SkeletonCard />
+          <SkeletonCard />
+          <SkeletonCard />
+        </>
+        }
       </div>
     </div>
   )
 }
 
 export const AlbumItem = ({albumData}) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+
   return (
     <Link href="/album/[id]" as={`/album/${albumData._id}`} >
     <div className="home_albumItem relative w-full h-max cursor-pointer">
-      <div className="relative w-full h-72">
+      <div className={`relative w-full h-72 bg-gray-400 ${isLoaded ? 'animate-none' : 'animate-pulse'}`}>
       {albumData.images &&
-        <Image className="home_albumItem_image object-cover" src={albumData.images[0].url} alt={albumData.name} layout='fill' />
+        <Image className="home_albumItem_image object-cover" src={albumData.images[0].url} alt={albumData.name} layout='fill' onLoad={() => setIsLoaded(true)} />
       }
       </div>
       <div className="w-max">
@@ -57,6 +71,17 @@ export const AlbumItem = ({albumData}) => {
       </div>
     </div>
     </Link>
+  )
+}
+
+export const SkeletonCard = () => {
+  return (
+    <div className="w-full p-4 bg-gray-400 animate-pulse">
+      <div className="relative w-full h-64 bg-gray-600" />
+      <div className="w-max pt-4">
+        <p className="w-64 h-8 bg-gray-600"></p>
+      </div>
+    </div>
   )
 }
 

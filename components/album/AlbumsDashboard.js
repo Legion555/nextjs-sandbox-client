@@ -6,14 +6,17 @@ import AddAlbum from './admin_AddAlbum';
 import AlbumView from './admin_AlbumView';
 //redux
 import { useSelector, useDispatch } from 'react-redux';
-import { updateAlbumData, updateUserData } from '../../actions';
+import { updateUserData } from '../../slices/userDataSlice';
+import { updateAlbumData } from '../../slices/albumDataSlice';
 //icons
 import { BsTrash } from 'react-icons/bs';
 import { ImEye } from 'react-icons/im';
 
+
+
 export default function AlbumsDashboard() {
     const dispatch = useDispatch();
-    const userData = useSelector(state => state.userData);
+    const userData = useSelector(state => state.userData.value);
     
     const [albumView, setAlbumView] = useState('');
 
@@ -88,7 +91,7 @@ export default function AlbumsDashboard() {
                     onClick={() => setAlbumView('add')}>Create new album</p>
             </div>
             <div className="grid justify-items-center w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-10">
-                {userData.albums.map(album => 
+                {userData && userData.albums.map(album => 
                     <Album name={album.name} key={album._id}
                         albumData={album}
                         viewAlbum={viewAlbum} deleteAlbum={deleteAlbum} />
