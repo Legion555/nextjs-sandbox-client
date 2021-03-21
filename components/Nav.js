@@ -17,7 +17,7 @@ export default function Nav() {
     return (
         <nav className="absolute w-full h-max bg-gray-100 flex justify-between md:justify-evenly content-center p-4">
             <div>
-                <p className="p-2">Legion Photography</p>
+                <Link href="/"><p className="p-2">Legion Photography</p></Link>
             </div>
             {/* Screen: Mobile */}
             <div className="block md:hidden z-0">

@@ -1,26 +1,39 @@
-import Head from 'next/head'
-import Image from 'next/image'
+import {useEffect, useState} from 'react';
+import axios from 'axios';
+import Head from 'next/head';
+import Image from 'next/image';
 import {useRouter} from 'next/router';
-import {useState} from 'react';
 //redux
-import {useDispatch} from 'react-redux'
-import {updateAlbumList} from '../../../slices/albumListSlice'
+import {useDispatch, useSelector} from 'react-redux';
+import {updateAlbumList} from '../../../slices/albumListSlice';
 //icons
 import { BsCardImage } from 'react-icons/bs';
 import { GiCancel } from 'react-icons/gi';
 
 
 
-export default function album({albums}) {
-    const router = useRouter();
-    const id = parseInt(router.query.id, 10);
-
-    //update global albumList
+export default function album() {
     const dispatch = useDispatch();
-    dispatch(updateAlbumList(albums));
+    const router = useRouter();
 
-    //set local albumData
-    const albumData = albums.filter(album => album._id === id)[0];
+    const [albumData, setAlbumData] = useState(null);
+
+    const albumId = parseInt(router.query.id, 10);
+    const albumList = useSelector(state => state.albumList.value);
+
+    useEffect(() => {
+        if (albumList) {
+            let tempAlbumData = albumList.filter(album => album._id == albumId)[0];
+            setAlbumData(tempAlbumData);
+        } else {
+            axios.get('/api/albums/getAlbums')
+            .then(result => {
+                dispatch(updateAlbumList(result.data));
+                let tempAlbumData = albumList.filter(album => album._id == albumId)[0];
+                setAlbumData(tempAlbumData);
+            }).catch(err => console.log(err))
+        }
+    }, [])
 
     const [imageView, setImageView] = useState(false);
     const [imageData, setImageData] = useState({});
@@ -38,16 +51,17 @@ export default function album({albums}) {
     return (
         <div className="min-h-screen pt-24">
             <Head>
-                <title>{albumData.name}</title>
-                <meta name={albumData.name} content={albumData.name} />
+                <title>{albumData && albumData.name}</title>
             </Head>
-            <h1 className="text-center text-4xl underline">{albumData.name}</h1>
+            <h1 className="text-center text-4xl underline">{albumData && albumData.name}</h1>
             {/* Generate images */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 p-12">
-            {albumData.images && albumData.images.map(image => 
-                <ImageItem imageData={image} toggleImage={toggleImage} key={image.name} />
-            )}
-            </div>
+            {albumData &&
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 p-12">
+                    {albumData.images && albumData.images.map(image => 
+                        <ImageItem imageData={image} toggleImage={toggleImage} key={image.name} />
+                    )}
+                </div>
+            }
             {imageView &&
                 <ImageModal imageData={imageData} toggleImage={toggleImage} />
             }
@@ -93,21 +107,4 @@ export const ImageModal = ({imageData, toggleImage}) => {
             </div>
         </div>
     )
-}
-
-export const getServerSideProps = async (context) => {
-    let res;
-    if (process.env.NODE_ENV === 'development') {
-        res = await fetch(`http://localhost:3333/api/albums/?email=legion@gmail.com`)
-        } else {
-        res = await fetch(`${process.env.serverAPI}/api/albums/?email=legion@gmail.com`)
-        }
-
-    const albums = await res.json()
-
-    return {
-        props: {
-            albums
-        }
-    }
 }

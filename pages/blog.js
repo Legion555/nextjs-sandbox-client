@@ -6,10 +6,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { updateAlbumList } from '../actions'
 
 export default function Home({blog}) {
-  //Get album data
-//   const dispatch = useDispatch();
-//   dispatch(updateAlbumList(albums));
-//   const albumList = useSelector(state => state.albumList);
 
   return (
     <div className="min-h-screen w-full pt-12">

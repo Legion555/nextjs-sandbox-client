@@ -9,22 +9,17 @@ import { updateAlbumList } from '../slices/albumListSlice'
 
 
 
-export default function Home({albums}) {
+export default function Home() {
   //Get album data
   const dispatch = useDispatch();
   const albumList = useSelector(state => state.albumList.value);
 
   useEffect(() => {
-    if (process.env.NODE_ENV === 'development') {
-      axios.get('http://localhost:3333/api/albums/?email=legion@gmail.com')
-      .then(result => {
-        dispatch(updateAlbumList(result.data));
-      }).catch(err => console.log(err))
-    } else {
-      axios.get(`${process.env.serverAPI}/api/albums/?email=legion@gmail.com`)
-      .then(result => {
-        dispatch(updateAlbumList(result.data));
-      }).catch(err => console.log(err))
+    if (!albumList) {
+      axios.get('/api/albums/getAlbums')
+        .then(result => {
+            dispatch(updateAlbumList(result.data));
+        }).catch(err => console.log(err))
     }
   }, [])
   
@@ -58,7 +53,8 @@ export const AlbumItem = ({albumData}) => {
   const [isLoaded, setIsLoaded] = useState(false);
 
   return (
-    <Link href="/album/[id]" as={`/album/${albumData._id}`} >
+    // <Link href="/album/[id]" as={`/album/${albumData._id}`} >
+    <Link href={{pathname: '/album/[id]', query: {id: albumData._id}}} >
     <div className="home_albumItem relative w-full h-max cursor-pointer">
       <div className={`relative w-full h-72 bg-gray-400 ${isLoaded ? 'animate-none' : 'animate-pulse'}`}>
       {albumData.images &&
@@ -84,25 +80,3 @@ export const SkeletonCard = () => {
     </div>
   )
 }
-
-// export async function getServerSideProps(context) {
-//   let res;
-//   if (process.env.NODE_ENV === 'development') {
-//       res = await fetch(`http://localhost:3333/api/albums/?email=legion@gmail.com`)
-//     } else {
-//       res = await fetch(`${process.env.serverAPI}/api/albums/?email=legion@gmail.com`)
-//     }
-//   const albums = await res.json()
-
-//   if (!albums) {
-//     return {
-//       notFound: true,
-//     }
-//   }
-  
-//   return {
-//     props: {
-//       albums
-//     }
-//   }
-// }
