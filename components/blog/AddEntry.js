@@ -6,7 +6,7 @@ import imageCompression  from "browser-image-compression";
 import ThumbnailUpload from './AddEntry_ThumbnailUpload';
 //redux
 import { useSelector, useDispatch } from 'react-redux';
-import { updateUserData } from '../../actions';
+import { updateUserData } from '../../slices/userDataSlice';
 //icons
 import { BsTextareaT, BsImages, BsCardImage } from 'react-icons/bs';
 import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';

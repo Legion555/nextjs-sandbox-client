@@ -5,13 +5,11 @@ import { persistReducer } from 'redux-persist'
 //reducers
 import userDataReducer from '../slices/userDataSlice';
 import albumListReducer from '../slices/albumListSlice';
-import albumDataReducer from '../slices/albumDataSlice';
 import darkModeReducer from '../slices/darkModeSlice';
 
 const reducers = combineReducers({
     userData: userDataReducer,
     albumList: albumListReducer,
-    albumData: albumDataReducer,
     darkMode: darkModeReducer
 });
 

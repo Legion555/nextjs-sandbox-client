@@ -5,7 +5,8 @@ import Link from 'next/link'
 import AddEntry from './AddEntry';
 //redux
 import { useSelector, useDispatch } from 'react-redux';
-import { updateAlbumData, updateUserData } from '../../actions';
+import { updateUserData } from '../../slices/userDataSlice';
+import { updateAlbumData } from '../../slices/albumListSlice';
 //icons
 import { BsTrash } from 'react-icons/bs';
 import { ImEye } from 'react-icons/im';

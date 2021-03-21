@@ -4,7 +4,7 @@ import {useRouter} from 'next/router';
 import {useState} from 'react';
 //redux
 import {useSelector, useDispatch} from 'react-redux'
-import {updateAlbumList} from '../../../actions'
+import {updateAlbumList} from '../../../slices/albumListSlice'
 //icons
 import { BsCardImage } from 'react-icons/bs';
 import { GiCancel } from 'react-icons/gi';
