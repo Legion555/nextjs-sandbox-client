@@ -6,6 +6,7 @@ import imageCompression  from "browser-image-compression";
 //redux
 import { useSelector, useDispatch } from 'react-redux';
 import { updateUserData } from '../../slices/userDataSlice';
+import { updateAlbumData } from '../../slices/albumDataSlice';
 //icons
 import { AiOutlineCheckCircle } from 'react-icons/ai';
 import { BsCardImage } from 'react-icons/bs';
@@ -104,7 +105,7 @@ export default function Upload() {
         .then(res => {
             //set user data
             dispatch(updateUserData(res.data));
-            // dispatch(updateAlbumData(res.data.albums.filter(album => album._id === albumData._id)[0]));
+            dispatch(updateAlbumData(res.data.albums.filter(album => album._id === albumData._id)[0]));
         })
         .catch(err => {
             console.log("Error: " + err);

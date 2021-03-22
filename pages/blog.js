@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 //redux
 import { useDispatch, useSelector } from 'react-redux'
-import { updateAlbumList } from '../slices/albumListSlice'
+import { updateAlbumList } from '../actions'
 
 export default function Home({blog}) {
 

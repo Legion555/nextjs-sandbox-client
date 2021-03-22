@@ -6,6 +6,7 @@ import Image from 'next/image'
 //redux
 import { useSelector, useDispatch } from 'react-redux';
 import { updateUserData } from '../../slices/userDataSlice';
+import { updateAlbumData } from '../../slices/albumDataSlice';
 //icons
 import { BsTrash, BsCardImage } from 'react-icons/bs';
 import { GiCancel } from 'react-icons/gi';
@@ -58,7 +59,7 @@ export default function AddAlbum(props) {
                     //set user data
                     dispatch(updateUserData(res.data));
                     //set album data
-                    // dispatch(updateAlbumData( res.data.albums.filter(album => album._id === albumData._id)[0]))
+                    dispatch(updateAlbumData( res.data.albums.filter(album => album._id === albumData._id)[0]))
                 })
                 .catch(err => {
                     console.log(err);

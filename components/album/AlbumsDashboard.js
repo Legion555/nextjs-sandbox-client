@@ -7,6 +7,7 @@ import AlbumView from './admin_AlbumView';
 //redux
 import { useSelector, useDispatch } from 'react-redux';
 import { updateUserData } from '../../slices/userDataSlice';
+import { updateAlbumData } from '../../slices/albumDataSlice';
 //icons
 import { BsTrash } from 'react-icons/bs';
 import { ImEye } from 'react-icons/im';
@@ -28,7 +29,7 @@ export default function AlbumsDashboard() {
         }
 
     const viewAlbum = (albumId) => {
-        // dispatch(updateAlbumData(userData.albums.filter(album => album._id === albumId)[0]));
+        dispatch(updateAlbumData(userData.albums.filter(album => album._id === albumId)[0]));
         setAlbumView('view');
     }
     
